@@ -37,6 +37,9 @@
   left: -5px;
   z-index: -1;
 }
+.keyboard_upperCase {
+  text-transform: uppercase;
+}
 
 .key {
   display: flex;
@@ -48,6 +51,14 @@
   border-radius: 50%;
   background-color: #808080;
   border: #1a1a1a 2px solid;
+  box-shadow: 1px 1px 3px #1a1a1a;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.key_active, .key:active {
+  border-color: #353535;
+  box-shadow: none;
+  background-color: coral;
 }
 
 .key_Backspace {
@@ -70,7 +81,7 @@
   width: 135px;
 }
 
-.key_ShiftRigth {
+.key_ShiftRight {
   width: 115px;
 }
 
@@ -83,7 +94,7 @@
 .key_CapsLock,
 .key_ShiftLeft,
 .key_Enter,
-.key_ShiftRigth,
+.key_ShiftRight,
 .key_Space {
   border-radius: 50px;
 }
