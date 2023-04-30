@@ -55,7 +55,7 @@
 	"ArrowUp": {"key": "⇧", "keyShift": "⇧", "keyRu": "⇧", "keyRuShift": "⇧"},
 	"ShiftRight": {"key": "Shift", "keyShift": "Shift", "keyRu": "Shift", "keyRuShift": "Shift"},
 	"ControlLeft": {"key": "Ctrl", "keyShift": "Ctrl", "keyRu": "Ctrl", "keyRuShift": "Ctrl"},
-	"MetaLeft": {"key": "Meta", "keyShift": "Meta", "keyRu": "Meta", "keyRuShift": "Meta"},
+	"MetaLeft": {"key": "Win", "keyShift": "Win", "keyRu": "Win", "keyRuShift": "Win"},
 	"AltLeft": {"key": "Alt", "keyShift": "Alt", "keyRu": "Alt", "keyRuShift": "Alt"},
 	"Space": {"key": " ", "keyShift": " ", "keyRu": " ", "keyRuShift": " "},
     "AltRight": {"key": "Alt", "keyShift": "Alt", "keyRu": "Alt", "keyRuShift": "Alt"},

@@ -1,19 +1,7 @@
 import letters from "./letters.json" assert { type: "json" };
 const body = document.querySelector('body');
 let lang = "en";
-let CapsLockOn = "false";
-
-let Arr = [];
-document.onkeydown = function(event) {
-    let list = {
-        "key": event.key,
-        "code": event.code,
-        "charCode": event.charCode,
-        "keyCode": event.keyCode
-    }
-    Arr.push(list)
-    console.log( event,list);
-}
+let CapsLockOn = false;
 
 function GeneratePage() {
     body.classList.add('page');
@@ -58,6 +46,7 @@ function GenerateInstruction() {
 }
 function CreatingKeys() {
     let keyboard = document.querySelector('.keyboard');
+    keyboard.innerHTML = '';
     for(let key in letters) {
         let newKey = document.createElement('div');
         newKey.classList.add('key');
@@ -65,7 +54,45 @@ function CreatingKeys() {
         if(lang == "en") {
             newKey.textContent = `${letters[key]["key"]}`
         }
+        if(lang == "ru") {
+            newKey.textContent = `${letters[key]["keyRu"]}`
+        }
         keyboard.append(newKey);
     }
 }
+function ReactingOnKey(event){
+   event.preventDefault();
+   //Add active style;
+   let keyboard = document.querySelector('.keyboard');
+   let key = keyboard.querySelectorAll('.key');
+   key.forEach((e) => {
+    if(e.classList.contains(`key_${event.code}`)) {
+       e.classList.add("key_active");
+    }
+   })
+    //lang change
+    if(event.code == "ControlLeft" && event.code == "AltLeft") {
+        console.log("Ctrl + Alt");
+    }
+
+}
+function ReactingOutKey(event){
+   event.preventDefault();
+   //Remove active style;
+   let keyboard = document.querySelector('.keyboard');
+   let key = keyboard.querySelectorAll('.key');
+   key.forEach((e) => {
+    if(e.classList.contains(`key_${event.code}`)) {
+        //CAPSLOCK check
+        if(e.classList.contains(`key_CapsLock`) && !CapsLockOn) {
+            CapsLockOn = true
+        } else {
+            e.classList.remove("key_active");
+            CapsLockOn = false;
+        }
+    }
+   })
+}
 window.addEventListener("load", GeneratePage);
+document.addEventListener('keydown', ReactingOnKey);
+document.addEventListener('keyup', ReactingOutKey);
