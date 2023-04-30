@@ -1,7 +1,8 @@
 import letters from "./letters.json" assert { type: "json" };
 const body = document.querySelector('body');
-let lang = "en";
+let lang = localStorage.getItem("lang")? localStorage.getItem("lang") : "en";
 let CapsLockOn = false;
+let combinate = {};
 
 function GeneratePage() {
     body.classList.add('page');
@@ -24,6 +25,7 @@ function GenerateTextArea() {
     textScreen.setAttribute('id', "textField");
     textScreen.setAttribute('cols', "80");
     textScreen.setAttribute('rows', "10");
+    textScreen.setAttribute('autofocus', 'autofocus');
     body.append(textScreen);
 }
 function GenerateKeyboard() {
@@ -61,20 +63,24 @@ function CreatingKeys() {
     }
 }
 function ReactingOnKey(event){
-   event.preventDefault();
-   //Add active style;
-   let keyboard = document.querySelector('.keyboard');
-   let key = keyboard.querySelectorAll('.key');
-   key.forEach((e) => {
-    if(e.classList.contains(`key_${event.code}`)) {
-       e.classList.add("key_active");
-    }
-   })
+    event.preventDefault();
+    if(event.code) combinate[event.code] = true;
+    //Add active style;
+    AddActStyle(event);
     //lang change
-    if(event.code == "ControlLeft" && event.code == "AltLeft") {
-        console.log("Ctrl + Alt");
-    }
-
+    if(combinate["ControlLeft"] && combinate["AltLeft"]) {
+        //Stop endless change
+        if(event.repeat && combinate["ControlLeft"] && combinate["AltLeft"]) return;
+        if(lang === "en") {
+            lang = "ru";
+            CreatingKeys();
+            AddActStyle(event);
+        } else {
+            lang = "en";
+            CreatingKeys();
+            AddActStyle(event);
+        }
+    };
 }
 function ReactingOutKey(event){
    event.preventDefault();
@@ -85,14 +91,31 @@ function ReactingOutKey(event){
     if(e.classList.contains(`key_${event.code}`)) {
         //CAPSLOCK check
         if(e.classList.contains(`key_CapsLock`) && !CapsLockOn) {
-            CapsLockOn = true
-        } else {
+            CapsLockOn = true;
+        } else if(e.classList.contains(`key_CapsLock`) && CapsLockOn) {
             e.classList.remove("key_active");
             CapsLockOn = false;
+        } else {
+            e.classList.remove("key_active");
         }
     }
-   })
+   });
+   delete combinate[event.code];
+}
+function AddActStyle(event) {
+    let keyboard = document.querySelector('.keyboard');
+    let key = keyboard.querySelectorAll('.key');
+    key.forEach((e) => {
+     if(e.classList.contains(`key_${event.code}`)) e.classList.add("key_active");
+     for(let keys in combinate) {
+        if(e.classList.contains(`key_${keys}`)) e.classList.add("key_active");
+     }
+    });
 }
 window.addEventListener("load", GeneratePage);
 document.addEventListener('keydown', ReactingOnKey);
 document.addEventListener('keyup', ReactingOutKey);
+document.addEventListener('mousedown', ReactingOnKey);
+window.addEventListener("beforeunload", () =>
+    localStorage.setItem("lang", lang)
+);
