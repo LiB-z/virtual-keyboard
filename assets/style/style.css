@@ -37,9 +37,6 @@
   left: -5px;
   z-index: -1;
 }
-.keyboard_upperCase {
-  text-transform: uppercase;
-}
 
 .key {
   display: flex;
@@ -53,6 +50,9 @@
   border: #1a1a1a 2px solid;
   box-shadow: 1px 1px 3px #1a1a1a;
   cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
   transition: all 0.3s;
 }
 .key_active, .key:active {
@@ -99,6 +99,9 @@
   border-radius: 50px;
 }
 
-#textField {
+.page__text {
   padding: 10px;
+  border-radius: 25px;
+  color: gray;
+  text-align: center;
 }/*# sourceMappingURL=style.css.map */
