@@ -122,7 +122,7 @@ function ReactingOnKey(event) {
     }
   }
   // Shift
-  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight' || event.target.classList.contains('key_ShiftLeft')) {
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     if (event.repeat || (combinate.ShiftLeft && combinate.ShiftRight)) return;
     CreatingKeys(true);
     AddActStyle(event);
